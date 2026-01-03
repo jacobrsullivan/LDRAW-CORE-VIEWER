@@ -1,0 +1,99 @@
+{
+  "name": "ldraw-core-viewer",
+  "version": "1.0.4",
+  "description": "LDraw 3D Web Viewer & Editor - View and edit LEGO models in your browser using the LDraw format",
+  "type": "module",
+  "bin": {
+    "ldraw-core-viewer": "./bin/ldraw-core-viewer.cjs"
+  },
+  "main": "server.cjs",
+  "files": [
+    "bin/",
+    "dist/assets/",
+    "dist/index.html",
+    "dist/vite.svg",
+    "dist/scenes/default.ldr",
+    "dist/scenes/CAR.ldr",
+    "scripts/",
+    "server.cjs",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:full": "tsc -b && vite build",
+    "start": "node server.cjs",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "vitest run --config vitest.config.ts",
+    "test:watch": "vitest --config vitest.config.ts",
+    "postinstall": "node scripts/postinstall.cjs",
+    "prepublishOnly": "npm run build",
+    "test:phase2": "vitest run src/**/PieceManager.test.ts src/**/LDrawTransforms.test.ts",
+    "lint:phase2": "eslint src/three/{PieceManager,LDrawTransforms}.ts",
+    "test:phase3": "vitest run src/test/SceneReconciliation.test.ts src/test/EditorIntegration.test.ts src/test/ParserSerializer.test.ts src/state/useModelStore.test.ts",
+    "lint:phase3": "eslint src/three/reconcileScene.ts src/components/{LDrawEditor,Canvas3D}.tsx",
+    "test:phase4": "vitest run src/test/SelectionSystem.test.ts src/test/TransformIntegration.test.ts src/test/CodeSync.test.ts",
+    "lint:phase4": "eslint src/three/{LDrawTransforms,SelectionManager,TransformControlsManager,InputEventHandler}.ts src/components/LDrawEditor.tsx",
+    "test:phase5": "vitest run src/test/SelectionGroupManager.test.ts src/test/MultiSelectIntegration.test.ts",
+    "lint:phase5": "eslint src/three/{SelectionGroupManager,InputEventHandler,TransformControlsManager,LDrawTransforms}.ts src/state/useModelStore.ts"
+  },
+  "keywords": [
+    "ldraw",
+    "lego",
+    "3d",
+    "viewer",
+    "editor",
+    "threejs",
+    "webgl",
+    "cad",
+    "brick",
+    "model"
+  ],
+  "author": "Jacob Sullivan",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacobrsullivan/LDRAW-CORE-VIEWER.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jacobrsullivan/LDRAW-CORE-VIEWER/issues"
+  },
+  "homepage": "https://github.com/jacobrsullivan/LDRAW-CORE-VIEWER#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@monaco-editor/react": "^4.7.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^12.1.5",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^17.0.50",
+    "@types/react-dom": "^17.0.17",
+    "@types/three": "^0.179.0",
+    "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "happy-dom": "^17.4.4",
+    "jest": "^29.7.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "terser": "^5.44.1",
+    "three": "^0.179.1",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.24.1",
+    "uuid": "^11.1.0",
+    "vite": "^6.2.0",
+    "vitest": "^3.1.1",
+    "zustand": "^4.4.1"
+  }
+}

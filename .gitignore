@@ -1,0 +1,50 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+.DS_Store
+
+# IDE config
+.cursorrules
+CLAUDE.md
+
+# Archive folder
+archive/
+
+# LDraw parts library (478MB - too large for git)
+ldraw/
+
+# Development/test files
+ChangeLog*.*
+
+# Scene files (only keep CAR.ldr and default.ldr)
+public/scenes/*
+!public/scenes/CAR.ldr
+!public/scenes/default.ldr
+
+# NPM pack artifacts
+*.tgz

@@ -1,0 +1,119 @@
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.app-header {
+  background-color: #2c3e50;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.app-content {
+  flex: 1;
+  overflow: hidden;
+}
+
+.panel {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.canvas-panel {
+  background-color: #f0f0f0;
+}
+
+.editor-panel {
+  background-color: #ffffff;
+  overflow: auto;
+}
+
+/* Media query for responsive layout on mobile */
+@media (max-width: 768px) {
+  .resizable-container {
+    flex-direction: column !important;
+  }
+
+  .resizable-pane-left {
+    width: 100% !important;
+    height: 50%;
+  }
+
+  .drag-handle {
+    display: none;
+  }
+
+  .resizable-pane-right {
+    height: 50%;
+  }
+
+  .canvas-panel {
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+/* Monaco editor selection highlighting styles */
+.selected-piece-line {
+  background-color: rgba(0, 123, 255, 0.15) !important;
+  border-left: 3px solid #007bff;
+}
+
+.selected-piece-margin {
+  background-color: rgba(0, 123, 255, 0.2);
+  border-radius: 2px;
+}

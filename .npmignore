@@ -1,0 +1,54 @@
+# Source files (bundled in dist/)
+src/
+public/
+
+# Build configuration (not needed at runtime)
+vite.config.ts
+vitest.config.ts
+tsconfig.json
+tsconfig.app.json
+tsconfig.node.json
+eslint.config.js
+
+# Development files
+.git/
+.gitignore
+.env*
+*.local
+archive/
+docs/
+
+# Test files
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Editor files
+.vscode/
+.idea/
+*.sw?
+
+# OS files
+.DS_Store
+
+# The ldraw folder is downloaded by postinstall
+ldraw/
+
+# Build artifacts
+build_check.js
+*.tgz
+
+# Project docs (not needed in package)
+CLAUDE.md
+
+# Extra scene files (only keep default.ldr and CAR.ldr)
+dist/scenes/enhanced/
+dist/scenes/100_enhanced.ldr
+dist/scenes/2piece_default.ldr
+dist/scenes/b2piece_default.ldr
+dist/scenes/CAR2.ldr
+dist/scenes/new_model2.ldr
+dist/scenes/new_model21.ldr
+dist/scenes/new_model3.ldr
+dist/scenes/trimodel.ldr
