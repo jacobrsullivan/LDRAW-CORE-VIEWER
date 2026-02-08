@@ -1,0 +1,59 @@
+{
+  "changes": [
+    {
+      "version number": "0.0.28",
+      "type": "Bug Fix",
+      "description": "Added case-insensitive file extension handling",
+      "details": "Fixed the issue where only lowercase .ldr and .dat file extensions were recognized. Updated file extension handling throughout the application to be case-insensitive, now properly supporting both uppercase (.LDR, .DAT) and lowercase (.ldr, .dat) extensions. Improved part loading by normalizing file paths in the cache.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts",
+        "src/three/SceneManager.ts",
+        "src/components/Editor.tsx",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "version number": "0.0.27",
+      "type": "Bug Fix",
+      "description": "Fixed synchronization between Monaco Editor and 3D viewer on startup",
+      "details": "Resolved an issue where the Monaco Editor would load a hardcoded default file while the 3D viewer loaded a different file. Modified the initialization sequence to ensure the Editor properly loads the same content as the 3D viewer. Added a fallback mechanism if the initial model fails to load.",
+      "files_affected": [
+        "src/components/Editor.tsx",
+        "src/components/Canvas3D.tsx", 
+        "src/App.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.26",
+      "type": "Feature",
+      "description": "Implemented Monaco Editor integration for live LDraw code editing",
+      "details": "Added Monaco editor with LDraw syntax highlighting, file management capability, and live 3D scene updates. The editor now supports loading and saving models to/from the scenes folder. Added API endpoints for handling file operations. Any changes in the editor are immediately reflected in the 3D view via debounced model updates.",
+      "files_affected": [
+        "src/components/Editor.tsx",
+        "src/components/Canvas3D.tsx", 
+        "src/App.tsx",
+        "src/three/SceneManager.ts",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "version number": "0.0.25",
+      "type": "Bug Fix",
+      "description": "Fixed LDraw coordinate system handling for proper part positioning",
+      "details": "Implemented proper handling of LDraw's coordinate system where -Y is up. Modified SceneManager to correctly invert Y coordinates when positioning parts, updating parts, and converting between Three.js and LDraw coordinate systems. This fixes the issue where parts at higher positions in LDraw files (more negative Y values) were appearing at lower positions in the 3D view.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts",
+        "src/three/SceneManager.ts"
+      ]
+    },
+    {
+      "version number": "0.0.29",
+      "type": "Bug Fix",
+      "description": "Added validation for LDraw file content to prevent HTML parsing errors",
+      "details": "Fixed an issue where HTML error pages (like 404 responses) were being parsed as LDraw files, causing parsing errors like 'Unknown line type \"<!doctype\"'. Added validation step to check if the content is actually an LDraw file before attempting to parse it, preventing invalid content from being cached.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    }
+  ]
+}

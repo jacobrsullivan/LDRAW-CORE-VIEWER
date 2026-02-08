@@ -1,0 +1,47 @@
+{
+  "changes": [
+    {
+      "version number": "0.1.0",
+      "type": "Test Fix",
+      "description": "Fixed failing tests in ColorManager and SceneManager",
+      "details": "Updated ColorManager test to correctly handle custom color codes (>= 256), and fixed SceneManager event listener test to properly handle async model loading.",
+      "files_affected": [
+        "src/test/ColorManager.test.ts",
+        "src/test/SceneManager.test.ts"
+      ]
+    },
+    {
+      "version number": "0.1.0",
+      "type": "Enhancement",
+      "description": "Expanded test coverage for core modules",
+      "details": "Added comprehensive unit tests for key components including ColorManager, PartsFileManager, PieceManager, SceneManager, AppState, and utility functions. Enhanced existing tests for the LDraw serializer with additional edge cases.",
+      "files_affected": [
+        "src/test/ColorManager.test.ts",
+        "src/test/PartsFileManager.test.ts",
+        "src/test/PieceManager.test.ts",
+        "src/test/SceneManager.test.ts",
+        "src/test/AppState.test.ts",
+        "src/test/utils.test.ts",
+        "src/test/serializer.test.ts"
+      ]
+    },
+    {
+      "version": "0.0.1",
+      "type": "Test Enhancement",
+      "description": "Updated serializer tests to match actual implementation",
+      "details": "Modified serializer tests to reflect the actual implementation, including proper precision handling (2 decimal places), removed custom precision test, and improved test descriptions.",
+      "files_affected": [
+        "src/test/serializer.test.ts"
+      ]
+    },
+    {
+      "version number": "0.0.1",
+      "type": "Code Refactor",
+      "description": "Simplified color handling in PartGeometryLoader",
+      "details": "Removed redundant color validation and simplified material handling in PartGeometryLoader to better trust the ColorManager's output.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    }
+  ]
+}

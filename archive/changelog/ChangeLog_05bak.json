@@ -1,0 +1,433 @@
+{
+  "changes": [
+    {
+      "version number": "0.4.7",
+      "type": "Bug Fix",
+      "description": "Fixed Y-axis inconsistency in 90-degree rotation buttons",
+      "details": "Removed the updateAllPieceTransforms call from the 90-degree rotation button handlers to prevent Y-axis offset inconsistencies (causing -10 offsets). The fix skips the recalculation of LDraw transformations from THREE.js objects after rotation, instead directly using the explicitly calculated transformation.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.4.6",
+      "type": "Enhancement",
+      "description": "Improved 90-degree rotation buttons to respect individual piece centers",
+      "details": "Enhanced the 90-degree rotation button handlers to ensure rotations happen around each piece's individual center, not a combined center. Added explicit comments in the code to clarify that we're preserving the piece position during rotation to maintain the proper rotation center.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.4.2",
+      "type": "Bug Fix",
+      "description": "Fixed color rendering for pieces in the LDraw viewer",
+      "details": "Resolved an issue where pieces weren't correctly applying color when initially added to the scene. Modified the PieceManager.addPiece method to use the createColoredPartInstance functionality when a colorCode is present on the piece, ensuring colors are properly applied during initial piece loading, not just during subsequent color updates.",
+      "files_affected": [
+        "src/three/PieceManager.ts"
+      ]
+    },
+    {
+      "version number": "0.3.5",
+      "type": "Enhancement",
+      "description": "Improved file management with proper new file, save, and save as functionality",
+      "details": "Enhanced the file management system by implementing proper 'New', 'Save', and 'Save As' functionalities. Added the ability to create new files with custom names, save files without losing changes, and save existing files under different names. Implemented change tracking with visual indicators (*) for unsaved changes, prompts to prevent data loss when switching files with unsaved changes, and proper file name management in the LDraw content.",
+      "files_affected": [
+        "src/components/Editor.tsx"
+      ]
+    },
+    {
+      "version number": "0.4.3",
+      "type": "Feature",
+      "description": "Added 90-degree rotation buttons for precise rotation control",
+      "details": "Implemented X, Y, and Z axis 90-degree rotation buttons that appear when the rotation mode is active. These buttons allow users to precisely rotate selected pieces in 90-degree increments around each axis, complementing the existing free-form rotation controls.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.4.5",
+      "type": "Bug Fix",
+      "description": "Enhanced 90-degree rotation buttons to ensure consistent editor updates",
+      "details": "Improved the 90-degree rotation button handlers to match the exact same update path as the regular transform controls. Added the updateAllPieceTransforms call before getting the model from SceneManager, ensuring all transforms are properly synchronized before updating the editor. Added detailed logging to track the update process. This fix ensures rotation operations performed with the 90-degree buttons appear correctly in the LDraw editor code.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.4.4",
+      "type": "Bug Fix",
+      "description": "Fixed 90-degree rotation buttons not updating the editor",
+      "details": "Resolved an issue where using the 90-degree rotation buttons wouldn't update the LDraw code in the editor. The problem was that after applying rotations, the model wasn't being properly updated in the store. Fixed by adding explicit calls to updateAllPieceTransforms and setFromViewer after each rotation operation.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.3.4",
+      "type": "Bug Fix",
+      "description": "Fixed position updates from editor not reflecting in the 3D view",
+      "details": "Resolved an issue where changing a piece's position in the editor (like changing X from 0 to 10) wasn't being reflected in the 3D view. Implemented a smarter update strategy that directly updates the affected pieces using the SceneManager.updatePiece() function rather than forcing a full model reload. This preserves existing piece instances while ensuring position changes are properly applied.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.3.3",
+      "type": "Architecture",
+      "description": "Complete overhaul of coordinate transformation system",
+      "details": "Completely redesigned the coordinate transformation system to properly handle LDraw and Three.js coordinate conversions. Created dedicated utility functions (ldrawToThreeJsPosition, threeJsToLDrawPosition, etc.) to handle coordinate system conversions consistently. Removed the container-based approach for pieces in favor of direct object transformation with better matrix handling. This provides a universal solution that works reliably for all coordinates and transformations.",
+      "files_affected": [
+        "src/three/LDrawTransforms.ts",
+        "src/three/PieceManager.ts",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.3.2",
+      "type": "Bug Fix",
+      "description": "Fixed Y-coordinate not being respected in the viewer",
+      "details": "Resolved an issue where the Y-coordinate values set in the editor weren't being properly applied in the 3D viewer. Added extensive Y-coordinate tracking and validation throughout the transform pipeline, implemented safeguards to prevent Y-coordinate loss during transformations, and added manual verification to ensure the Y-coordinate is correctly inverted between LDraw and Three.js coordinate systems.",
+      "files_affected": [
+        "src/three/PieceManager.ts",
+        "src/three/SceneManager.ts",
+        "src/three/LDrawTransforms.ts"
+      ]
+    },
+    {
+      "version number": "0.3.1",
+      "type": "Enhancement",
+      "description": "Made transform controls attach to the visual center of pieces",
+      "details": "Modified the piece structure to use containers with centered geometry, ensuring that transform controls attach to the visual center of pieces instead of their origin point (which was typically at the top). This makes the manipulation of pieces more intuitive and matching typical 3D software behavior. Created a GROUP container structure that positions pieces with their geometric center at the transform origin.",
+      "files_affected": [
+        "src/three/PieceManager.ts",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.3.0",
+      "type": "Bug Fix",
+      "description": "Fixed pieces not respecting position edits from the editor",
+      "details": "Fixed the issue where pieces wouldn't position correctly when coordinates were edited in the editor component. The root cause was in our piece reuse strategy, where we tried to modify existing THREE.js objects but missed proper matrix updates. Changed the implementation to fully recreate pieces instead of trying to reuse them, ensuring proper transforms are applied. Added detailed logging to the transform application process to verify correct positioning.",
+      "files_affected": [
+        "src/three/SceneManager.ts",
+        "src/three/LDrawTransforms.ts"
+      ]
+    },
+    {
+      "version number": "0.2.9",
+      "type": "Bug Fix",
+      "description": "Fixed position reset issue when editing positions in editor",
+      "details": "Resolved a critical issue where manual edits to piece coordinates in the editor weren't being applied to the 3D viewer. The root cause was that SceneManager.loadModel() was not re-applying transforms to existing THREE.Object3D instances for pieces with the same ID. Completely redesigned the model loading process to properly handle existing pieces by explicitly applying the LDraw transform to each piece, ensuring positions edited in the code editor are correctly reflected in the 3D view.",
+      "files_affected": [
+        "src/three/SceneManager.ts",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.60",
+      "type": "Bug Fix",
+      "description": "Fixed piece position information not updating in UI",
+      "details": "Resolved an issue where the position information (X, Y, Z coordinates) in the UI would display 0.0 for all pieces. Implemented a dedicated useEffect hook to properly track position changes when manipulating objects with TransformControls, ensuring the position display stays in sync with the actual piece position in the scene.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.59",
+      "type": "Bug Fix",
+      "description": "Fixed 'selection changed' events triggering on hover",
+      "details": "Resolved an issue where hovering over objects in the scene was triggering unwanted selection change events. Modified the handleMouseMove function to use a non-selecting approach for hover detection and added UI hover detection to prevent any handling when hovering over UI elements. This prevents the selection from being cleared when the mouse moves across the scene or UI controls.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.58",
+      "type": "Bug Fix",
+      "description": "Improved handling of UI element clicks in the 3D viewer",
+      "details": "Further refined the fix for selection being cleared when clicking UI buttons. Implemented a more robust approach by adding explicit checks in the click handler to detect clicks on UI elements and prevent them from triggering canvas selection logic. Added data attributes to UI elements to make them easily identifiable in event handlers.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.57",
+      "type": "Bug Fix",
+      "description": "Fixed TransformControls buttons clearing selection when clicked",
+      "details": "Resolved the issue where clicking the Move/Rotate buttons would clear the current selection. The problem was caused by click events from the UI buttons propagating to the canvas container, which would interpret it as a click on empty space. Fixed by calling event.stopPropagation() in the button handlers to prevent event bubbling.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.56",
+      "type": "Bug Fix",
+      "description": "Fixed TransformControls mode still not persisting correctly with UI buttons",
+      "details": "Implemented a more robust solution for the transform mode persistence issue that was still occurring when clicking the Rotate/Move buttons in the UI. Added a dedicated useEffect hook to synchronize the transform mode state with the TransformControls object, ensuring the selected mode is maintained consistently when selecting objects or changing modes.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.55",
+      "type": "Bug Fix",
+      "description": "Fixed TransformControls mode not persisting when selecting objects",
+      "details": "Resolved an issue where the transform mode would always revert to 'translate' when selecting a new object, even if 'rotate' was previously selected. Modified the selection handler to explicitly maintain the current transform mode when attaching to newly selected objects.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.54",
+      "type": "Bug Fix",
+      "description": "Fixed 'Rotate' mode losing object selection in TransformControls",
+      "details": "Resolved the issue where clicking the Rotate button would cause the selected piece to be deselected. Fixed by removing transformMode from the useEffect dependencies and improving the changeTransformMode function to preserve the currently attached object when switching between transform modes.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.53",
+      "type": "Bug Fix",
+      "description": "Fixed TransformControls compatibility with Three.js 0.175.0",
+      "details": "Resolved the 'THREE.Object3D.add: object not an instance of THREE.Object3D. TransformControls' error by updating how TransformControls is added to the scene. Now using transformControls.getHelper() instead of adding the controls directly, which is required in Three.js 0.175.0 where TransformControls no longer extends Object3D.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.52",
+      "type": "Feature",
+      "description": "Replaced custom controls with Three.js native TransformControls for more intuitive manipulation",
+      "details": "Implemented Three.js TransformControls to provide standard 3D transformation gizmos (arrows, rotation rings) directly on selected pieces. Removed custom button controls in favor of this more intuitive approach. Added keyboard shortcuts (G for translate, R for rotate) and mode switching buttons. This provides a more professional and standard 3D manipulation experience aligned with industry-standard 3D software.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.51",
+      "type": "Feature",
+      "description": "Added transform controls for moving and rotating selected pieces",
+      "details": "Implemented UI controls to allow users to move and rotate selected pieces in the 3D viewer. Added buttons for translation along each axis (X, Y, Z) and rotation around each axis. The controls appear in the top-right corner of the canvas when a piece is selected and provide an intuitive way to manipulate pieces in the scene.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "type": "Feature",
+      "description": "Implemented bidirectional synchronization between Monaco Editor and Three.js Viewer",
+      "details": "Added ability to update the Editor when changes are made in the Viewer. Created a serializer to convert LDrawModel objects back to LDraw text format and updated components to communicate changes in both directions.",
+      "files_affected": [
+        "src/ldraw/serializer.ts",
+        "src/App.tsx",
+        "src/components/Canvas3D.tsx",
+        "src/test/serializer.test.ts"
+      ]
+    },
+    {
+      "version": "0.1.1",
+      "type": "Bug Fix",
+      "description": "Improved transform handling to prevent editor updates during active transforms",
+      "details": "Modified the transform handling to only update the editor when a transform operation is complete, not during active manipulation. Added debouncing to prevent excessive updates.",
+      "files_affected": [
+        "src/App.tsx",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version": "0.1.2",
+      "type": "Bug Fix",
+      "description": "Fixed position reset issue in bidirectional synchronization",
+      "details": "Resolved an issue where pieces would reset to their original position after transform operations. Improved the synchronization mechanism between the Editor and Viewer to prevent feedback loops and position resets. Added explicit flags to track content origin and implemented better state management with appropriate timeouts.",
+      "files_affected": [
+        "src/App.tsx",
+        "src/components/Editor.tsx"
+      ]
+    },
+    {
+      "version": "0.2.0",
+      "type": "Architecture",
+      "description": "Implemented Zustand store for centralized state management",
+      "details": "Completely redesigned the synchronization mechanism using Zustand for state management. Added origin tracking to prevent feedback loops, implemented toggle for live/manual updates, and improved file loading paths. This provides a single source of truth for the model data and prevents position resets during transforms.",
+      "files_affected": [
+        "src/state/modelStore.ts",
+        "src/App.tsx",
+        "src/components/Canvas3D.tsx",
+        "src/components/Editor.tsx"
+      ]
+    },
+    {
+      "version": "0.2.1",
+      "type": "Bug Fix",
+      "description": "Fixed scene loading URL path issues",
+      "details": "Resolved issues with loading scene files by handling dynamic port assignment properly. Updated the URL construction to use the window.location.origin to ensure requests go to the correct server port. Updated the scene file loading mechanism to fetch available scenes from the API endpoint instead of using hardcoded values. Added a test scene file to demonstrate multi-piece model loading.",
+      "files_affected": [
+        "src/components/Editor.tsx",
+        "public/scenes/2piece_default.ldr"
+      ]
+    },
+    {
+      "version": "0.2.2",
+      "type": "Bug Fix",
+      "description": "Fixed persistent loading overlay",
+      "details": "Fixed an issue where the loading overlay would be permanently displayed, preventing user interaction. The problem occurred because the loading states were converted to unused variables but still used for conditional rendering. Updated the Canvas3D component to properly initialize loading states as false and added loading indicators during initialization and model loading with proper completion handlers.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version": "0.2.3",
+      "type": "Bug Fix",
+      "description": "Fixed editor not updating after multiple piece movements",
+      "details": "Resolved an issue where the editor would only update after the first movement of a piece, but not subsequent ones. Enhanced the transform end event handler to directly get the selected piece from SceneManager instead of relying on component state. Added an updateAllPieceTransforms method to SceneManager to ensure all piece transforms are properly synchronized after manipulation.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx",
+        "src/three/SceneManager.ts"
+      ]
+    },
+    {
+      "version": "0.2.4",
+      "type": "Bug Fix",
+      "description": "Fixed inconsistent editor updates after multiple piece movements",
+      "details": "Resolved an issue where the editor wouldn't always update after multiple movements of the same piece. Enhanced the modelStore with a timestamp-based change detection system to ensure each movement is properly detected as a change. Improved the Editor component's update detection to avoid update loops and ensure it catches all incoming changes from the viewer.",
+      "files_affected": [
+        "src/components/Editor.tsx",
+        "src/state/modelStore.ts",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version": "0.2.5",
+      "type": "Enhancement",
+      "description": "Added rounding of position and rotation values in LDraw output",
+      "details": "Modified the LDraw serializer to round position and rotation matrix values to two decimal places in the editor. This improves readability and reduces noise from floating-point precision while maintaining accuracy for the model. Added a utility function roundToDecimal() to handle the rounding consistently.",
+      "files_affected": [
+        "src/ldraw/serializer.ts"
+      ]
+    },
+    {
+      "version": "0.2.6",
+      "type": "Enhancement",
+      "description": "Added automatic selection clearing when model is updated from editor",
+      "details": "Modified the Canvas3D component to automatically clear any selected pieces when the model is updated from the editor (either through direct edits or scene loading). This ensures a consistent user experience by preventing orphaned selection states after model changes.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version": "0.2.7",
+      "type": "Bug Fix",
+      "description": "Fixed pieces resetting to original positions after manual edits",
+      "details": "Resolved an issue where pieces would reset to their original positions when manual edits were made in the editor. Implemented position preservation logic to store and restore piece positions and rotations when loading an updated model from editor changes. This ensures that pieces maintain their transformed positions even when the model is reloaded from text edits.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version": "0.2.8",
+      "type": "Bug Fix",
+      "description": "Fixed position values not updating correctly from editor edits",
+      "details": "Resolved two critical issues with editor synchronization: 1) Manual edits to position values in the editor weren't being correctly applied in the 3D viewer, as the position preservation logic was overriding explicit edits; 2) Subsequent edits in the editor weren't always being detected. Added intelligent detection of explicit position edits, improved debugging logs, and ensured the editor component properly detects model changes.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx",
+        "src/components/Editor.tsx"
+      ]
+    },
+    {
+      "version number": "0.1.0",
+      "type": "Bug Fix",
+      "description": "Fixed transform controls pivot point issue",
+      "details": "Implemented a wrapper object approach to ensure transform controls always use the center of a piece as the pivot point, solving the inconsistency between displayed position and manipulation position. Updated coordinate transformations to maintain consistent reference points between the editor, position display, and transform controls.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx",
+        "src/three/LDrawTransforms.ts"
+      ]
+    },
+    {
+      "version number": "0.3.4",
+      "type": "Bug Fix",
+      "description": "Simplified transform controls implementation to fix Y-axis inversion and movement glitches",
+      "details": "Removed the wrapper object approach which was causing Y-axis inversion when selecting pieces and glitchy movement due to competing update listeners. Simplified the implementation to use direct object attachment and consistent coordinate transformation paths, ensuring all components (selection, transform controls, editor, and UI position display) use the same coordinate system.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.3.5",
+      "type": "Bug Fix",
+      "description": "Fixed positional offset calculation for accurate LDraw coordinate display",
+      "details": "Modified getLDrawTransformFromObject to calculate the offset between the Three.js object's origin and the piece's visual center. This ensures that position values shown in the UI correctly represent the center of the piece in LDraw coordinates, fixing the issue where Y-position would suddenly change to -10 upon moving a piece.",
+      "files_affected": [
+        "src/three/LDrawTransforms.ts"
+      ]
+    },
+    {
+      "version number": "0.3.6",
+      "type": "Bug Fix",
+      "description": "Fixed center-to-origin offset calculation for piece position",
+      "details": "Corrected the center point calculation algorithm in getLDrawTransformFromObject that was causing incorrect position values. The function now properly transforms the local origin-to-center offset to world space and adds it to the world origin position, ensuring accurate center-based coordinates for LDraw pieces. This fixes the remaining issues with coordinate inconsistency between the editor and viewer.",
+      "files_affected": [
+        "src/three/LDrawTransforms.ts"
+      ]
+    },
+    {
+      "version number": "0.3.7",
+      "type": "Bug Fix",
+      "description": "Fixed position tracking to properly handle relative movements",
+      "details": "Implemented a delta-based position calculation system that stores initial LDraw and Three.js positions as reference points. The transform function now calculates the delta movement in Three.js coordinates and applies it to the original LDraw position, ensuring that small movements result in corresponding small coordinate changes instead of adding an incorrect constant offset. This fixes the issue where moving a piece by 0.1 units would result in a position reading of -10.1 instead of the expected 0.1 units.",
+      "files_affected": [
+        "src/three/LDrawTransforms.ts",
+        "src/three/PieceManager.ts"
+      ]
+    },
+    {
+      "version number": "0.0.7",
+      "type": "Enhancement",
+      "description": "Improved transform calculations using piece geometry information",
+      "details": "Updated the LDrawTransforms utility to incorporate piece-specific geometry information when calculating position updates. The PieceManager now stores detailed geometry data including bounding box, center point, and height metrics to improve position accuracy during transformations.",
+      "files_affected": [
+        "src/three/LDrawTransforms.ts",
+        "src/three/PieceManager.ts"
+      ]
+    },
+    {
+      "version number": "0.3.8",
+      "type": "Bug Fix",
+      "description": "Fixed center offset issue in coordinate transformations",
+      "details": "Enhanced the coordinate transformation system to properly account for the difference between LDraw (where origin is at the center of the piece) and Three.js (where origin is at local coordinates 0,0,0). The transform functions now incorporate the piece-specific geometry information, including calculated center points, to ensure accurate positioning even for pieces with asymmetric centers.",
+      "files_affected": [
+        "src/three/LDrawTransforms.ts",
+        "src/three/PieceManager.ts"
+      ]
+    },
+    {
+      "version number": "0.3.9",
+      "type": "Bug Fix",
+      "description": "Fixed center offset calculation in coordinate transformations",
+      "details": "Corrected the mathematical formula in the transform system to properly account for the geometric center offset when converting between LDraw (center-based) and Three.js (origin-based) coordinate systems. Added a center compensation factor that properly translates movements of the piece origin in Three.js to movements of the center point in LDraw coordinates.",
+      "files_affected": [
+        "src/three/LDrawTransforms.ts"
+      ]
+    },
+    {
+      "version number": "0.4.0",
+      "type": "Bug Fix",
+      "description": "Fixed sign error in center offset calculation",
+      "details": "Corrected a critical sign error in the center compensation formula that was causing the Y-position to be off by twice the center offset. The original implementation added a negative value (from geometryInfo.center.y * 2) when it should have been subtracting it, effectively moving pieces in the wrong direction. This fix properly accounts for the negative center offset when translating between coordinate systems.",
+      "files_affected": [
+        "src/three/LDrawTransforms.ts"
+      ]
+    },
+    {
+      "version number": "0.4.1",
+      "type": "Bug Fix",
+      "description": "Fixed center offset compensation using correct offset amount",
+      "details": "Refined the center offset compensation to use the actual center offset value rather than twice the offset. Previous implementation was overcompensating by doubling the center.y value, causing a +10 unit error in the opposite direction. This fix properly balances the coordinate transformation between LDraw and Three.js coordinate systems.",
+      "files_affected": [
+        "src/three/LDrawTransforms.ts"
+      ]
+    }
+  ]
+}

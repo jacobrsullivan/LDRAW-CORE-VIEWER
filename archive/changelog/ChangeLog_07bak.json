@@ -1,0 +1,213 @@
+{
+  "changes": [
+    {
+      "version number": "0.2.2",
+      "type": "Bug Fix",
+      "description": "Fixed test errors related to Parts API",
+      "details": "Modified the LDrawLoaderModule and PartsFileManager to properly detect and handle test environment, resolving unhandled rejection errors during tests.",
+      "files_affected": [
+        "src/three/LDrawLoaderModule.ts",
+        "src/ldraw/PartsFileManager.ts",
+        "src/test/PartsFileManager.test.ts"
+      ]
+    },
+    {
+      "version number": "0.2.1",
+      "type": "Refactor",
+      "description": "Moved key files to improve project structure",
+      "details": "Moved ldraw directory from public folder to project root, and moved ChangeLog.json from src folder to project root for better organization.",
+      "files_affected": [
+        "vite.config.ts",
+        "build_check.js",
+        "ChangeLog.json"
+      ]
+    },
+    {
+      "version number": "0.2.0",
+      "type": "Enhancement",
+      "description": "Implemented Parts API for production optimization",
+      "details": "Created a Parts API to serve LDraw parts on-demand, reducing production build size by 478MB. Added middleware for development, documentation for production deployment options, and configured the build process to exclude the ldraw directory.",
+      "files_affected": [
+        "vite.config.ts",
+        "src/ldraw/PartsFileManager.ts",
+        "src/three/LDrawLoaderModule.ts",
+        "docs/DeployingPartsApi.md",
+        "README.md"
+      ]
+    },
+    {
+      "version number": "0.1.0",
+      "type": "Enhancement",
+      "description": "Simplified editor synchronization",
+      "details": "Removed liveSync toggle and 'Update Viewer' button in favor of always keeping the editor and 3D view synchronized for a more intuitive user experience.",
+      "files_affected": [
+        "src/components/Editor.tsx"
+      ]
+    },
+    {
+      "version number": "0.1.0",
+      "type": "Enhancement",
+      "description": "Improved save functionality in SceneFileManager",
+      "details": "Added higher-level saveCurrentFile and saveAsNewFile methods to SceneFileManager to handle the full save workflow with proper error handling and user interactions.",
+      "files_affected": [
+        "src/utils/SceneFileManager.ts",
+        "src/components/Editor.tsx"
+      ]
+    },
+    {
+      "version number": "0.1.0",
+      "type": "Enhancement",
+      "description": "Added tests for SceneFileManager",
+      "details": "Created comprehensive test suite for the new SceneFileManager utility to ensure path normalization, file loading/saving, and error handling work correctly.",
+      "files_affected": [
+        "src/test/SceneFileManager.test.ts"
+      ]
+    },
+    {
+      "version number": "0.1.0",
+      "type": "Enhancement",
+      "description": "Improved file management system",
+      "details": "Created a separate SceneFileManager utility to handle file operations, improved path normalization, and fixed issues with file selection.",
+      "files_affected": [
+        "src/components/Editor.tsx",
+        "src/utils/SceneFileManager.ts"
+      ]
+    },
+    {
+      "version number": "0.1.0",
+      "type": "Bug Fix",
+      "description": "Fixed file selection dropdown showing duplicate entries",
+      "details": "Normalized paths and removed duplicates to prevent showing both default.ldr and scenes/default.ldr in the selection dropdown.",
+      "files_affected": [
+        "src/components/Editor.tsx",
+        "src/utils/SceneFileManager.ts"
+      ]
+    },
+    {
+      "version number": "0.1.0",
+      "type": "Enhancement",
+      "description": "Improved default file loading",
+      "details": "Removed hardcoded default content and replaced with loading from scenes/default.ldr with proper fallback handling.",
+      "files_affected": [
+        "src/components/Editor.tsx"
+      ]
+    },
+    {
+      "version number": "0.1.0",
+      "type": "Bug Fix",
+      "description": "Fixed linter error in toggleLiveSync function",
+      "details": "Added proper error handling to fix 'error is defined but never used' linter warning.",
+      "files_affected": [
+        "src/components/Editor.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.1",
+      "type": "Enhancement",
+      "description": "Upgraded Zustand from 3.7.2 to 4.4.1",
+      "details": "Fixed ESM/CJS module format conflicts by upgrading Zustand to 4.4.1. Updated import patterns to use named exports, improved Vite configuration for better ESM compatibility, and ensured React 17 compatibility.",
+      "files_affected": [
+        "package.json",
+        "src/state/modelStore.ts",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "version number": "0.2.3",
+      "type": "Bug Fix",
+      "description": "Fixed type safety issue in Canvas3D component",
+      "details": "Replaced 'any' type with proper LDrawPiece interface import in the model update logic to improve type safety and prevent potential runtime errors.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.2.4",
+      "type": "Refactor",
+      "description": "Moved rotation matrix multiplication function to LDrawTransforms module",
+      "details": "Extracted multiplyRotationMatrices function from Canvas3D.tsx to LDrawTransforms.ts for better code organization and reusability. This makes the matrix operations available to other components and reduces duplication.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx",
+        "src/three/LDrawTransforms.ts"
+      ]
+    },
+    {
+      "version number": "0.2.5",
+      "type": "Refactor",
+      "description": "Created TransformControlsManager class",
+      "details": "Created a dedicated TransformControlsManager class to handle 3D transform controls logic, event handling, and rotation operations. This improves code organization by separating transform controls logic from the Canvas3D component.",
+      "files_affected": [
+        "src/three/TransformControlsManager.ts"
+      ]
+    },
+    {
+      "version number": "0.2.6",
+      "type": "Refactor",
+      "description": "Updated Canvas3D to use the TransformControlsManager",
+      "details": "Refactored Canvas3D.tsx to use the new TransformControlsManager class, removing direct TransformControls handling. This improves code organization and separates concerns, making the component more maintainable.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.2.7",
+      "type": "Bug Fix",
+      "description": "Fixed TypeScript event type compatibility",
+      "details": "Created a type declaration file to properly extend THREE.EventDispatcher for TransformControlsManager events. This resolves TypeScript errors in the event handlers while maintaining type safety.",
+      "files_affected": [
+        "src/types/three-ext.d.ts",
+        "src/three/TransformControlsManager.ts",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.2.8",
+      "type": "Enhancement",
+      "description": "Created SelectionManagerEventHandler class",
+      "details": "Created a dedicated SelectionManagerEventHandler class to centralize selection-related event handling, with comprehensive test coverage. This separates event management from the UI component, improving code organization and maintainability.",
+      "files_affected": [
+        "src/three/SelectionManagerEventHandler.ts",
+        "src/test/SelectionManagerEventHandler.test.ts"
+      ]
+    },
+    {
+      "version number": "0.2.9",
+      "type": "Bug Fix",
+      "description": "Fixed Canvas3D component element selection",
+      "details": "Fixed the 3D viewer by reverting to using a React ref instead of getElementById for canvas selection. This resolves the 'Canvas element with ID undefined not found' error and restores the 3D viewer functionality.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.3.0",
+      "type": "Refactor",
+      "description": "Created InputEventHandler to manage input events",
+      "details": "Created a dedicated InputEventHandler class to manage keyboard, mouse, and window events for the Canvas3D component. Extracted and centralized event handling code, reducing component complexity and improving maintainability. The InputEventHandler properly handles UI interactions, 3D object selection, and transform mode changes.",
+      "files_affected": [
+        "src/three/InputEventHandler.ts",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.3.1",
+      "type": "Bug Fix",
+      "description": "Fixed selected objects disappearing when transform controls are attached",
+      "details": "Modified the TransformControlsManager.attach method to properly maintain object visibility and prevent loader reinitialization when selecting a piece. This fixes the issue where selected pieces would become invisible and trigger unnecessary PartGeometryLoader reinitialization.",
+      "files_affected": [
+        "src/three/TransformControlsManager.ts"
+      ]
+    },
+    {
+      "version number": "0.3.2",
+      "type": "Bug Fix",
+      "description": "Fixed transform controls not detaching when editing in editor",
+      "details": "Fixed an issue where transform controls would not properly detach when editing pieces in the editor, causing console errors and incorrect behavior. Improved editor-viewer synchronization to ensure controls are properly detached during edits and to update the editor immediately after changes are processed in the 3D view.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx",
+        "src/components/Editor.tsx",
+        "src/state/modelStore.ts"
+      ]
+    }
+  ]
+}

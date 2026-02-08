@@ -1,0 +1,343 @@
+{
+  "changes": [
+    {
+      "version number": "0.0.47",
+      "type": "Bug Fix",
+      "description": "Fixed TransformControls 'object not an instance of THREE.Object3D' error when attaching to objects",
+      "details": "Completely redesigned how TransformControls is integrated with the scene to resolve persistent type errors. Instead of trying to add TransformControls directly to the scene, now accessing and adding its internal _gizmo and _plane components, which are true Object3D instances. Created a proper type interface for accessing these internal properties safely.",
+      "files_affected": [
+        "src/three/TransformManager.ts"
+      ]
+    },
+    {
+      "version number": "0.0.46",
+      "type": "Bug Fix",
+      "description": "Fixed 'object not an instance of THREE.Object3D' error with TransformControls",
+      "details": "Resolved the persistent error where TransformControls couldn't be added to the scene by correctly handling how the TransformControls class interacts with the Three.js scene. Removed the problematic type casting in the constructor and improved the attach/detach methods to safely add/remove the controls from the scene.",
+      "files_affected": [
+        "src/three/TransformManager.ts"
+      ]
+    },
+    {
+      "version number": "0.0.42",
+      "type": "Bug Fix",
+      "description": "Fixed coordinate system transformation between LDraw and Three.js",
+      "details": "Corrected issues with LDraw to Three.js coordinate system transformations that were causing models to appear upside down. Properly implemented the necessary matrix transformations to handle the Y-axis inversion between coordinate systems. Added tests to verify correct coordinate transformations for both positions and rotations.",
+      "files_affected": [
+        "src/three/LDrawTransforms.ts",
+        "src/test/LDrawTransforms.test.ts"
+      ]
+    },
+    {
+      "version number": "0.0.41",
+      "type": "Refactor",
+      "description": "Moved scene setup utilities to utils.ts",
+      "details": "Continued improving code modularity by moving setupLights, addGrid, and addAxes methods from SceneManager to utils.ts. This makes these scene setup functions more reusable across the application and reduces the size of the SceneManager class.",
+      "files_affected": [
+        "src/three/SceneManager.ts",
+        "src/three/utils.ts"
+      ]
+    },
+    {
+      "version number": "0.0.40",
+      "type": "Refactor",
+      "description": "Moved centerCamera functionality to utils.ts",
+      "details": "Improved code reusability by replacing the private centerCamera method in SceneManager with the centerCameraOnGroup utility function in utils.ts. This reduces duplication and makes the camera centering logic available to other components.",
+      "files_affected": [
+        "src/three/SceneManager.ts",
+        "src/three/utils.ts"
+      ]
+    },
+    {
+      "version number": "0.0.39",
+      "type": "Refactor",
+      "description": "Reorganized code into separate modules for improved separation of concerns",
+      "details": "Created new modules to better organize code: LDrawTransforms.ts handles all coordinate system transformations, PieceManager.ts manages piece operations, and utils.ts contains reusable utility functions. Also moved createErrorGeometry to PartGeometryLoader.ts where it logically belongs. This refactoring improves code modularity, maintainability, and testability by following the single responsibility principle.",
+      "files_affected": [
+        "src/three/SceneManager.ts",
+        "src/three/LDrawTransforms.ts",
+        "src/three/PieceManager.ts",
+        "src/three/PartGeometryLoader.ts",
+        "src/three/utils.ts"
+      ]
+    },
+    {
+      "version number": "0.0.38",
+      "type": "Refactor",
+      "description": "Removed unused getMainMaterial method",
+      "details": "Removed the unused getMainMaterial method from PartGeometryLoader and its corresponding test to reduce dead code. The method was not being used in the application and only appeared in tests.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts",
+        "src/test/PartGeometryLoader.test.ts"
+      ]
+    },
+    {
+      "version number": "0.0.37",
+      "type": "Refactor",
+      "description": "Created a dedicated LDrawLoaderModule for improved Three.js integration",
+      "details": "Extracted all LDrawLoader initialization and configuration logic from PartGeometryLoader into a new dedicated LDrawLoaderModule. Created a factory class to handle dynamic imports and initialization of the Three.js LDrawLoader, further improving separation of concerns and code reusability.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts",
+        "src/three/interfaces/LDrawLoaderModule.ts"
+      ]
+    },
+    {
+      "version number": "0.0.28",
+      "type": "Bug Fix",
+      "description": "Added case-insensitive file extension handling",
+      "details": "Fixed the issue where only lowercase .ldr and .dat file extensions were recognized. Updated file extension handling throughout the application to be case-insensitive, now properly supporting both uppercase (.LDR, .DAT) and lowercase (.ldr, .dat) extensions. Improved part loading by normalizing file paths in the cache.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts",
+        "src/three/SceneManager.ts",
+        "src/components/Editor.tsx",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "version number": "0.0.27",
+      "type": "Bug Fix",
+      "description": "Fixed synchronization between Monaco Editor and 3D viewer on startup",
+      "details": "Resolved an issue where the Monaco Editor would load a hardcoded default file while the 3D viewer loaded a different file. Modified the initialization sequence to ensure the Editor properly loads the same content as the 3D viewer. Added a fallback mechanism if the initial model fails to load.",
+      "files_affected": [
+        "src/components/Editor.tsx",
+        "src/components/Canvas3D.tsx", 
+        "src/App.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.26",
+      "type": "Feature",
+      "description": "Implemented Monaco Editor integration for live LDraw code editing",
+      "details": "Added Monaco editor with LDraw syntax highlighting, file management capability, and live 3D scene updates. The editor now supports loading and saving models to/from the scenes folder. Added API endpoints for handling file operations. Any changes in the editor are immediately reflected in the 3D view via debounced model updates.",
+      "files_affected": [
+        "src/components/Editor.tsx",
+        "src/components/Canvas3D.tsx", 
+        "src/App.tsx",
+        "src/three/SceneManager.ts",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "version number": "0.0.25",
+      "type": "Bug Fix",
+      "description": "Fixed LDraw coordinate system handling for proper part positioning",
+      "details": "Implemented proper handling of LDraw's coordinate system where -Y is up. Modified SceneManager to correctly invert Y coordinates when positioning parts, updating parts, and converting between Three.js and LDraw coordinate systems. This fixes the issue where parts at higher positions in LDraw files (more negative Y values) were appearing at lower positions in the 3D view.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts",
+        "src/three/SceneManager.ts"
+      ]
+    },
+    {
+      "version number": "0.0.29",
+      "type": "Bug Fix",
+      "description": "Added validation for LDraw file content to prevent HTML parsing errors",
+      "details": "Fixed an issue where HTML error pages (like 404 responses) were being parsed as LDraw files, causing parsing errors like 'Unknown line type \"<!doctype\"'. Added validation step to check if the content is actually an LDraw file before attempting to parse it, preventing invalid content from being cached.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.31",
+      "type": "Bug Fix",
+      "description": "Fixed TransformControls error by removing dependency in InteractionController",
+      "details": "Resolved the 'THREE.Object3D.add: object not an instance of THREE.Object3D' error by removing the TransformManager dependency from InteractionController. Now the TransformControls are added directly to the scene in Canvas3D component, improving component separation and avoiding type casting issues with Three.js 0.175.0.",
+      "files_affected": [
+        "src/three/InteractionController.ts",
+        "src/components/Canvas3D.tsx",
+        "src/three/TransformManager.ts",
+        "src/test/InteractionController.test.ts"
+      ]
+    },
+    {
+      "version number": "0.0.30",
+      "type": "Bug Fix",
+      "description": "Fixed Three.js import paths and TransformControls error",
+      "details": "Resolved the 'THREE.Object3D.add: object not an instance of THREE.Object3D. TransformControls' error by fixing inconsistent import paths. Changed import paths from 'three/addons/' to 'three/examples/jsm/' to match the actual file structure in Three.js 0.175.0. Updated how TransformControls is added to the scene in InteractionController to use proper type assertions.",
+      "files_affected": [
+        "src/three/SceneManager.ts",
+        "src/three/TransformManager.ts",
+        "src/three/InteractionController.ts"
+      ]
+    },
+    {
+      "version number": "0.0.32",
+      "type": "Bug Fix",
+      "description": "Fixed LDrawLoader missing ConditionalLineMaterial error",
+      "details": "Resolved the 'THREE.LDrawLoader: ConditionalLineMaterial type must be specified via .setConditionalLineMaterial()' error by adding the correct ConditionalLineMaterial configuration to the PartGeometryLoader. Implemented the proper import from 'three/examples/jsm/materials/LDrawConditionalLineMaterial' and set it on the LDrawLoader instance.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.33",
+      "type": "Bug Fix",
+      "description": "Fixed 'Cannot read properties of null (reading 'visible')' error during rendering",
+      "details": "Added robust null checks to prevent Three.js rendering errors when encountering null objects or materials. Added try-catch block in the render function to gracefully handle errors, and enhanced the createColoredPartInstance method with additional null checks for materials. This resolves the TypeError that was occurring during scene rendering.",
+      "files_affected": [
+        "src/three/SceneManager.ts",
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.34",
+      "type": "Bug Fix",
+      "description": "Fixed 'Material properties for code 0' error",
+      "details": "Resolved the LDrawLoader warning about missing material properties for color code 0 (black) by adding special handling for this color in the PartGeometryLoader. Added appropriate material properties for black materials based on their type (MeshStandardMaterial, MeshPhongMaterial, etc.) to ensure proper rendering.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.35",
+      "type": "Refactor",
+      "description": "Improved LDraw-to-ThreeJS transformation management",
+      "details": "Consolidated transformation logic in SceneManager.ts by creating a dedicated applyLDrawTransformToObject method that handles all LDraw to Three.js coordinate conversions consistently. Removed empty applyLDrawToThreeJsTransform method from PartGeometryLoader. Enhanced documentation of the coordinate system differences. Fixed matrix application to use matrix.copy instead of applyMatrix4 to avoid transformation accumulation issues.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts",
+        "src/three/SceneManager.ts"
+      ]
+    },
+    {
+      "version number": "0.0.36",
+      "type": "Refactor",
+      "description": "Modularized PartGeometryLoader.ts for improved separation of concerns",
+      "details": "Refactored PartGeometryLoader.ts by moving ThreeLDrawLoader and LDrawLoaderWithMethods interfaces to their own module, extracted file validation to a dedicated LDrawFileManager, and moved color management to a separate LDrawColorManager class. This improves modularity, maintainability, and follows the single responsibility principle.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts",
+        "src/three/interfaces/LDrawLoaderTypes.ts",
+        "src/ldraw/FileManager.ts",
+        "src/ldraw/ColorManager.ts"
+      ]
+    },
+    {
+      "version number": "0.0.40",
+      "type": "Feature",
+      "description": "Re-enabled TransformManager and InteractionController for object manipulation",
+      "details": "Fixed TypeScript type issues in TransformManager and InteractionController to re-enable 3D object manipulation. Improved code organization by creating specific interfaces for event data and refactoring duplicate code. Added proper handling for null values and added transform controls UI in Canvas3D component to allow moving and rotating pieces.",
+      "files_affected": [
+        "src/three/TransformManager.ts",
+        "src/three/InteractionController.ts",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.43",
+      "type": "Bug Fix",
+      "description": "Fixed TransformControls error when adding to scene",
+      "details": "Resolved 'THREE.Object3D.add: object not an instance of THREE.Object3D' error by fixing the TransformManager.getObject3D() method to properly handle the TransformControls instance as a THREE.Object3D. Improved error handling when adding the transform controls to the scene.",
+      "files_affected": [
+        "src/three/TransformManager.ts",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.44",
+      "type": "Bug Fix",
+      "description": "Fixed TransformControls integration with Three.js scene",
+      "details": "Resolved persisting 'THREE.Object3D.add: object not an instance of THREE.Object3D' error by replacing the getObject3D method with a dedicated attachToScene method that properly adds the TransformControls to the scene. Added proper cleanup with dispose() method to prevent memory leaks.",
+      "files_affected": [
+        "src/three/TransformManager.ts",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.45",
+      "type": "Bug Fix",
+      "description": "Completely redesigned TransformManager for simpler, more reliable object manipulation",
+      "details": "Completely refactored the TransformManager class to follow Three.js best practices. Eliminated complex type casting and unnecessary abstractions by having the TransformControls added directly to the scene at initialization. Simplified API with direct attach/detach methods for manipulating objects. This significantly reduces complexity and eliminates persistent 'object not an instance of THREE.Object3D' errors.",
+      "files_affected": [
+        "src/three/TransformManager.ts",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.1",
+      "type": "Bug Fix",
+      "description": "Fixed typing issues in TransformManager",
+      "details": "Properly typed scene.add and scene.remove with TransformControls by using the correct type casting. Also fixed the setVisible method to use _root.visible instead of accessing visible through 'any'.",
+      "files_affected": [
+        "src/three/TransformManager.ts"
+      ]
+    },
+    {
+      "version number": "0.0.1",
+      "type": "Bug Fix",
+      "description": "Updated Canvas3D to use the improved TransformManager correctly",
+      "details": "Modified Canvas3D to pass the renderer's domElement instead of the renderer itself to the TransformManager constructor.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.48",
+      "type": "Bug Fix",
+      "description": "Fixed TypeScript typing issues in TransformManager and Canvas3D",
+      "details": "Resolved TypeScript typing errors in TransformManager.ts by creating an ExtendedTransformControls interface to properly handle the visible property. Updated Canvas3D.tsx to correctly implement the new TransformManager. The changes ensure proper TypeScript type checking while maintaining the functionality of the transform controls.",
+      "files_affected": [
+        "src/three/TransformManager.ts",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.49",
+      "type": "Refactor",
+      "description": "Removed PieceInfo component and related references",
+      "details": "Deleted the unused PieceInfo.tsx component and removed all references to it in Canvas3D.tsx, including the component definition, implementation, and related state variables. This simplifies the codebase by removing unused functionality.",
+      "files_affected": [
+        "src/components/PieceInfo.tsx",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.50",
+      "type": "Refactor",
+      "description": "Removed SceneInspector component and related references",
+      "details": "Deleted the SceneInspector.tsx component and removed the showDebugInfo prop from Canvas3D. This simplifies the codebase by removing the unused debug visualization component.",
+      "files_affected": [
+        "src/components/SceneInspector.tsx",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.51",
+      "type": "Refactor",
+      "description": "Removed TransformManager and InteractionController components",
+      "details": "Deleted TransformManager.ts, InteractionController.ts, and the associated test file. Updated Canvas3D component to remove all references to these components. This simplifies the codebase by removing the object transformation functionality in preparation for a new implementation.",
+      "files_affected": [
+        "src/three/TransformManager.ts",
+        "src/three/InteractionController.ts",
+        "src/test/InteractionController.test.ts",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.48",
+      "type": "Feature",
+      "description": "Integrated SelectionManager with SceneManager for piece selection",
+      "details": "Implemented the integration between the SelectionManager and SceneManager classes to enable piece selection in the 3D viewer. Added methods to select pieces by ID, coordinate-based ray casting, and hover detection. Added support for finding piece IDs from 3D objects and retrieving piece data by ID. This establishes the foundation for user interaction with pieces in the viewer.",
+      "files_affected": [
+        "src/three/SceneManager.ts",
+        "src/three/PieceManager.ts"
+      ]
+    },
+    {
+      "version number": "0.0.49",
+      "type": "Feature",
+      "description": "Added user interaction for piece selection in the 3D viewer",
+      "details": "Implemented mouse event handling in the Canvas3D component to enable interactive piece selection. Added click handling for selecting pieces and mouseover handling for hover effects. Enhanced the SelectionManager integration with proper event propagation and added an optional parameter to detect objects without selecting them.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx",
+        "src/three/SceneManager.ts"
+      ]
+    },
+    {
+      "version number": "0.0.50",
+      "type": "Feature",
+      "description": "Added information footer for selected pieces in the 3D viewer",
+      "details": "Implemented an information footer that displays the selected piece's ID, part ID, and X,Y,Z coordinates at the bottom of the 3D viewer. The footer appears when a piece is selected and updates in real-time as different pieces are selected. This improves the user experience by providing immediate feedback about the selected piece.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    }
+  ]
+}

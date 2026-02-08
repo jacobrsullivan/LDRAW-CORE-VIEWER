@@ -1,0 +1,51 @@
+{
+  "changes": [
+    {
+      "version number": "0.4.0",
+      "type": "Refactor",
+      "description": "Simplified state management between editor and viewer",
+      "details": "Refactored state management to use Zustand as the single source of truth and prevent circular updates. Added flags to track update source and pending changes, eliminating complex timestamp-based synchronization and reducing unnecessary re-renders.",
+      "files_affected": [
+        "src/state/modelStore.ts",
+        "src/components/Editor.tsx",
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.3.3",
+      "type": "Bug Fix",
+      "description": "Fixed position values being reverted when editing multiple pieces",
+      "details": "Added direct position override in Canvas3D component to ensure that piece positions from the editor are preserved exactly as specified, bypassing LDrawTransforms recalculation issues. This resolves a critical bug where positions would revert to incorrect values after editing multiple pieces.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.3",
+      "type": "Bug Fix",
+      "description": "Fixed character encoding issues in LDraw file serving",
+      "details": "Changed file reading from UTF-8 encoding to binary mode in the Vite middleware to prevent character corruption when serving LDraw files. This fixes issues where file content was being truncated or corrupted, particularly with special characters.",
+      "files_affected": [
+        "vite.config.ts"
+      ]
+    },
+    {
+      "version number": "0.0.2",
+      "type": "Bug Fix",
+      "description": "Fixed editor truncating lines longer than 10,000 characters",
+      "details": "Added stopRenderingLineAfter: -1 to Monaco editor configuration to prevent the editor from truncating long lines, which was causing issues when working with minified files or long data lines.",
+      "files_affected": [
+        "src/components/Editor.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.1",
+      "type": "Enhancement",
+      "description": "Disabled line wrapping in Monaco editor",
+      "details": "Added wordWrap: 'off' and wordWrapColumn: 1000 to Monaco editor configuration to prevent line wrapping which was causing issues with long LDraw lines.",
+      "files_affected": [
+        "src/components/Editor.tsx"
+      ]
+    }
+  ]
+}

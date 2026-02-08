@@ -1,0 +1,373 @@
+{
+  "changes": [
+    {
+      "version number": "0.0.1",
+      "type": "Feature",
+      "description": "Initial project setup",
+      "details": "Created project structure with Vite+React+TypeScript, installed dependencies (Three.js, Monaco Editor, testing libraries), and established directory architecture.",
+      "files_affected": [
+        "package.json",
+        "src/ldraw",
+        "src/three",
+        "src/components",
+        "src/state"
+      ]
+    },
+    {
+      "version number": "0.0.2",
+      "type": "Feature",
+      "description": "Basic implementation of LDraw parser and Three.js renderer",
+      "details": "Added LDraw type definitions, a placeholder parser implementation, Three.js scene manager, and a basic application state management system.",
+      "files_affected": [
+        "src/ldraw/types.ts",
+        "src/ldraw/parser.ts",
+        "src/three/LDrawLoader.ts",
+        "src/three/SceneManager.ts",
+        "src/state/AppState.ts",
+        "src/state/AppStateProvider.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.3",
+      "type": "Feature",
+      "description": "UI components and application layout",
+      "details": "Implemented split-view layout with 3D canvas and Monaco Editor components. Created testing setup with component mocking.",
+      "files_affected": [
+        "src/App.tsx",
+        "src/App.css",
+        "src/components/Canvas3D.tsx",
+        "src/components/Editor.tsx",
+        "src/components/__tests__/App.test.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.4",
+      "type": "Bug Fix",
+      "description": "Fixed build and test issues",
+      "details": "Resolved TypeScript errors, fixed OrbitControls import, and implemented component mocking for tests to avoid WebGL context errors.",
+      "files_affected": [
+        "src/ldraw/parser.ts",
+        "src/three/LDrawLoader.ts",
+        "src/three/SceneManager.ts",
+        "src/components/__tests__/App.test.tsx",
+        "vite.config.ts",
+        "vitest.config.ts"
+      ]
+    },
+    {
+      "version number": "0.0.5",
+      "type": "Feature",
+      "description": "Enhanced LDraw parser and data model implementation",
+      "details": "Implemented full LDraw parser with support for Type 0-5 lines, enhanced data model with LDrawPiece and LDrawModel interfaces, added support for SpecialBox types, and wrote comprehensive unit tests using TDD approach.",
+      "files_affected": [
+        "src/ldraw/types.ts",
+        "src/ldraw/parser.ts",
+        "src/test/parser.test.ts"
+      ]
+    },
+    {
+      "version number": "0.0.6",
+      "type": "Feature",
+      "description": "Three.js Scene Setup Implementation",
+      "details": "Enhanced the 3D Canvas component to properly use the SceneManager class. Improved scene initialization with proper lighting, camera settings, and fallback rendering. Exposed scene property through getter and fixed references.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx",
+        "src/three/SceneManager.ts"
+      ]
+    },
+    {
+      "version number": "0.0.7",
+      "type": "Feature",
+      "description": "Modular LDrawLoader Integration",
+      "details": "Implemented a dedicated PartGeometryLoader that uses Three.js's LDrawLoader for part geometry loading only. Updated SceneManager to use this loader, establishing a clear separation of concerns between scene data management and geometry loading. Added event system for scene changes and unit tests for PartGeometryLoader.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts",
+        "src/three/SceneManager.ts",
+        "src/components/Canvas3D.tsx",
+        "src/test/PartGeometryLoader.test.ts"
+      ]
+    },
+    {
+      "version number": "0.0.8",
+      "type": "Feature",
+      "description": "Testing and Verification of 3D Rendering",
+      "details": "Added integration tests for 3D rendering, updated Canvas3D to load models from the public folder, and created a SceneInspector component for debugging the Three.js scene graph. Implemented visual loading indicators and error handling for model loading.",
+      "files_affected": [
+        "src/test/RendererIntegration.test.ts",
+        "src/components/Canvas3D.tsx",
+        "src/components/SceneInspector.tsx"
+      ]
+    },
+    {
+      "version number": "0.0.9",
+      "type": "Bug Fix",
+      "description": "Fixed 3D Rendering of LDraw Models",
+      "details": "Resolved issue with LDrawLoader import path, improved part loading with fallbacks to multiple directories, enhanced placeholder geometry for missing parts, and fixed color mapping. Added comprehensive error handling and improved visual feedback for failed part loads.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.10",
+      "type": "Bug Fix",
+      "description": "Improved LDrawLoader integration and TypeScript compatibility",
+      "details": "Fixed TypeScript/build issues with LDrawLoader by implementing a dynamic import mechanism that works in both development and production environments. Enhanced placeholder geometry for missing parts and improved error handling.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.11",
+      "type": "Bug Fix",
+      "description": "Fixed LDrawLoader constructor error in browser",
+      "details": "Addressed critical runtime error in browser environment where LDrawLoader was not a constructor. Implemented a more robust loading mechanism with multiple fallback layers to ensure models always render, even when loader libraries are unavailable.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.12",
+      "type": "Bug Fix",
+      "description": "Fixed part loading issue where incorrect 3022.dat part was displayed",
+      "details": "Completely redesigned the part loading system to ensure correct parts are loaded. Removed placeholder geometry code and implemented an initialization-first approach that requires the real LDrawLoader to be available before loading any parts. Added proper error handling and visual feedback for failed part loads.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts",
+        "src/three/SceneManager.ts"
+      ]
+    },
+    {
+      "version number": "0.0.13",
+      "type": "Bug Fix",
+      "description": "Fixed LDraw parts loading issues",
+      "details": "Updated the partsLibraryPath in Canvas3D.tsx to use '../ldraw' instead of '/ldraw' to correctly reference the parts library. Also updated default.ldr to use an available part (u9512.dat) instead of the non-existent 3245a.dat.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx",
+        "public/default.ldr"
+      ]
+    },
+    {
+      "version number": "0.0.14",
+      "type": "Bug Fix",
+      "description": "Fixed LDraw parts loading issues",
+      "details": "Copied the ldraw directory to the public folder to make it accessible to the web server. Enhanced the PartGeometryLoader to provide more detailed error logging and add an additional fallback path for loading parts. Restored default.ldr to use the 3245a.dat part.",
+      "files_affected": [
+        "src/components/Canvas3D.tsx",
+        "src/three/PartGeometryLoader.ts",
+        "public/default.ldr",
+        "public/ldraw"
+      ]
+    },
+    {
+      "version number": "0.0.15",
+      "type": "Bug Fix",
+      "description": "Fixed LDraw parts loading with direct file fetching",
+      "details": "Modified PartGeometryLoader to use fetch API to get part content directly instead of relying on LDrawLoader's internal file loading mechanism. This bypasses issues with incorrect path handling in the Three.js LDrawLoader when used with Vite development server.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.16",
+      "type": "Bug Fix",
+      "description": "Fixed TypeScript build errors in PartGeometryLoader",
+      "details": "Updated the ThreeLDrawLoader interface to include the parseContent method and modified the code to use direct property access instead of bracket notation.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.17",
+      "type": "Bug Fix",
+      "description": "Implemented custom part geometry generation from raw LDraw content",
+      "details": "Created a fallback system that parses LDraw file contents directly and generates simplified box geometries based on extracted dimensions. This bypasses the LDrawLoader's file loading mechanism entirely, ensuring parts are always displayed even when the loader fails to parse the content.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.18",
+      "type": "Bug Fix",
+      "description": "Fixed build issues in PartGeometryLoader",
+      "details": "Removed unused variables and improved code consistency in the PartGeometryLoader class.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.19",
+      "type": "Feature",
+      "description": "Implemented proper LDraw model parsing",
+      "details": "Updated the PartGeometryLoader to use Three.js's LDrawLoader.parse method correctly with Promise-based handling. This enables loading and parsing of detailed LDraw geometry for parts instead of simplified box representations.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.20",
+      "type": "Bug Fix",
+      "description": "Improved LDraw content validation and error handling",
+      "details": "Enhanced the PartGeometryLoader to validate fetched content before parsing, ensuring that only valid LDraw files are processed. Extracted the simplified geometry creation to a dedicated method and improved fallback behavior for handling parse errors.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.21",
+      "type": "Bug Fix",
+      "description": "Enhanced LDraw content validation with HTML detection",
+      "details": "Improved the PartGeometryLoader to better detect HTML content masquerading as LDraw files, added more logging, and implemented a direct file system approach for development environments to bypass Vite's request handling issues.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.22",
+      "type": "Bug Fix",
+      "description": "Fixed HTML content detection and improved LDraw file validation",
+      "details": "Enhanced the PartGeometryLoader to properly validate LDConfig.ldr before loading and improved the part loading process with a dedicated content validation method. This resolves the 'Unknown line type \"<!doctype\"' error by ensuring HTML content never reaches the LDrawLoader parser.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.23",
+      "type": "Bug Fix",
+      "description": "Fixed LDrawLoader parse callback error",
+      "details": "Fixed TypeError: onLoad is not a function error by updating how we pass callbacks to the LDrawLoader.parse method. Added support for both modern and traditional Three.js LDrawLoader API formats and improved error handling during parse operations.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.24",
+      "type": "Bug Fix",
+      "description": "Fixed LDrawLoader callback binding issues",
+      "details": "Solved the 'onLoad is not a function' error by correctly handling the Three.js LDrawLoader API. Added specialized handling for two-parameter parse methods and improved function binding using Function.prototype.call to ensure correct 'this' context.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.25",
+      "type": "Feature",
+      "description": "Implemented custom Vite middleware for LDraw file loading",
+      "details": "Added a custom middleware to the Vite development server to properly serve LDraw (.dat and .ldr) files with the correct content type. Created comprehensive tests for the LDraw file loading functionality to ensure proper handling of HTML and LDraw content.",
+      "files_affected": [
+        "vite.config.ts",
+        "src/three/LDrawLoader.ts",
+        "src/test/LDrawLoading.test.ts"
+      ]
+    },
+    {
+      "version number": "0.0.26",
+      "type": "Bug Fix",
+      "description": "Fixed LDraw part loading and HTML content detection",
+      "details": "Enhanced the Vite middleware to intercept all .dat/.ldr file requests and return empty content rather than HTML for missing files. Added direct LDraw content parsing to bypass the LDrawLoader's internal loading and avoid HTML parsing errors. Improved content validation and debugging to better identify issues with file loading.",
+      "files_affected": [
+        "vite.config.ts",
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.27",
+      "type": "Bug Fix",
+      "description": "Simplified LDraw loading to rely on Three.js LDrawLoader",
+      "details": "Removed custom direct content parsing method and HTML error handling that were bypassing the original Three.js LDrawLoader. Simplified the Vite middleware to focus on serving LDraw files with correct content type. These changes ensure that the built-in Three.js parser is used instead of simplified geometry.",
+      "files_affected": [
+        "vite.config.ts",
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.28",
+      "type": "Bug Fix",
+      "description": "Fixed TypeScript errors preventing successful build",
+      "details": "Resolved multiple TypeScript errors including: unused variables in LDrawLoading.test.ts, properly typed mock implementations, and fixed missing index signatures in PartGeometryLoader.ts.",
+      "files_affected": [
+        "src/test/LDrawLoading.test.ts",
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.29",
+      "type": "Bug Fix",
+      "description": "Fixed unhandled errors in test suite",
+      "details": "Implemented global fetch mock in setup.ts to properly handle network requests during tests. This eliminates unhandled promise rejections from tests trying to fetch LDConfig.ldr from localhost when no server is running.",
+      "files_affected": [
+        "src/test/setup.ts"
+      ]
+    },
+    {
+      "version number": "0.0.30",
+      "type": "Bug Fix",
+      "description": "Simplified PartGeometryLoader implementation",
+      "details": "Greatly simplified the PartGeometryLoader.ts file by removing excessive HTML filtering, multiple path checking logic, and redundant validation. Now uses the standard LDrawLoader.loadAsync method directly with proper path handling.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.31",
+      "type": "Bug Fix",
+      "description": "Further simplified PartGeometryLoader implementation",
+      "details": "Removed the createSimplifiedGeometry method and streamlined the loading process. Now the loader throws appropriate errors when parts cannot be loaded instead of creating placeholder geometry, providing clearer error handling.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts",
+        "src/test/LDrawLoading.test.ts"
+      ]
+    },
+    {
+      "version number": "0.0.32",
+      "type": "Bug Fix",
+      "description": "Fixed path handling in PartGeometryLoader",
+      "details": "Removed artificial path construction with '/parts/' prefix and allowed LDrawLoader to handle paths internally. Simplified the loading process by removing the loadPartAsync method and integrating its functionality directly into loadPartGeometry.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.33",
+      "type": "Bug Fix",
+      "description": "Fixed upside-down pieces issue with coordinate system transformation",
+      "details": "Added a coordinate system transformation to convert from LDraw's Y-down system to Three.js's Y-up system. This resolves the issue where pieces were appearing upside down in the 3D view.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts"
+      ]
+    },
+    {
+      "version number": "0.0.34",
+      "type": "Enhancement",
+      "description": "Removed automatic part ID normalization",
+      "details": "Removed the part ID normalization logic that automatically appended '.dat' extension to part IDs. Now the PartGeometryLoader uses exactly the part ID provided by the caller, requiring explicit part ID specification.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts",
+        "src/test/PartGeometryLoader.test.ts"
+      ]
+    },
+    {
+      "version number": "0.0.25",
+      "type": "Feature",
+      "description": "Implemented scene interaction and manipulation features",
+      "details": "Added piece selection, transform controls, and interactive manipulation capabilities as part of Phase 4. Created new classes (SelectionManager, TransformManager, InteractionController) to handle user interaction with pieces in the 3D scene. Updated SceneManager to support transform operations and introduced UI controls for switching between transform modes.",
+      "files_affected": [
+        "src/three/SelectionManager.ts",
+        "src/three/TransformManager.ts",
+        "src/three/InteractionController.ts",
+        "src/three/SceneManager.ts",
+        "src/components/Canvas3D.tsx",
+        "src/test/SelectionManager.test.ts",
+        "src/test/InteractionController.test.ts"
+      ]
+    },
+    {
+      "version number": "0.0.25",
+      "type": "Bug Fix",
+      "description": "Fixed coordinate system transformation for LDraw models",
+      "details": "Modified the coordinate system transformation in PartGeometryLoader to use scale(1, -1, 1) instead of a 180-degree rotation around X-axis. This preserves the correct vertical ordering of parts in LDraw models, fixing the issue where parts at the top in LDraw files were appearing at the bottom in the rendered view.",
+      "files_affected": [
+        "src/three/PartGeometryLoader.ts",
+        "src/three/SceneManager.ts"
+      ]
+    }
+  ]
+}
